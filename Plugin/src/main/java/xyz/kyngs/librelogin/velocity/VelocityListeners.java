@@ -170,22 +170,31 @@ public class VelocityListeners
 
     @Subscribe(order = PostOrder.EARLY)
     public void onKick(KickedFromServerEvent event) {
-        var reason = event.getServerKickReason().orElse(Component.text("null"));
-        var message =
-                plugin.getMessages()
-                        .getMessage("info-kick")
-                        .replaceText(
-                                builder -> builder.matchLiteral("%reason%").replacement(reason));
         var player = event.getPlayer();
 
         if (event.kickedDuringServerConnect()) {
+            var reason = event.getServerKickReason().orElse(Component.text("null"));
+            var message =
+                    plugin.getMessages()
+                            .getMessage("info-kick")
+                            .replaceText(
+                                    builder -> builder.matchLiteral("%reason%").replacement(reason));
             event.setResult(KickedFromServerEvent.Notify.create(message));
         } else {
             // Check if fallback is disabled - if so, don't handle the event to allow other plugins to manage fallback
             if (!plugin.getConfiguration().get(ConfigurationKeys.FALLBACK)) {
-                // Fallback is disabled - let other plugins handle the fallback logic
+                // Fallback is disabled - let other plugins handle the fallback logic completely
+                // Don't create any message or set any result
                 return;
             }
+            
+            // Create message only when LibreLogin is handling the fallback
+            var reason = event.getServerKickReason().orElse(Component.text("null"));
+            var message =
+                    plugin.getMessages()
+                            .getMessage("info-kick")
+                            .replaceText(
+                                    builder -> builder.matchLiteral("%reason%").replacement(reason));
             
             // Check if the current server is a lobby server - if so, disconnect the player
             if (plugin.getServerHandler()
