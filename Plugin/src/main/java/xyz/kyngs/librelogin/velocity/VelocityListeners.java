@@ -170,41 +170,23 @@ public class VelocityListeners
 
     @Subscribe(order = PostOrder.EARLY)
     public void onKick(KickedFromServerEvent event) {
+        var reason = event.getServerKickReason().orElse(Component.text("null"));
+        var message =
+                plugin.getMessages()
+                        .getMessage("info-kick")
+                        .replaceText(
+                                builder -> builder.matchLiteral("%reason%").replacement(reason));
         var player = event.getPlayer();
 
-        // Check if fallback is disabled - if so, don't handle the event at all to allow other
-        // plugins to manage fallback
-        if (!plugin.getConfiguration().get(ConfigurationKeys.FALLBACK)) {
-            // Fallback is disabled - let other plugins handle the fallback logic completely
-            // Don't create any message or set any result for any type of kick
-            return;
-        }
-
         if (event.kickedDuringServerConnect()) {
-            var reason = event.getServerKickReason().orElse(Component.text("null"));
-            var message =
-                    plugin.getMessages()
-                            .getMessage("info-kick")
-                            .replaceText(
-                                    builder ->
-                                            builder.matchLiteral("%reason%").replacement(reason));
             event.setResult(KickedFromServerEvent.Notify.create(message));
         } else {
-
-            // Create message only when LibreLogin is handling the fallback
-            var reason = event.getServerKickReason().orElse(Component.text("null"));
-            var message =
-                    plugin.getMessages()
-                            .getMessage("info-kick")
-                            .replaceText(
-                                    builder ->
-                                            builder.matchLiteral("%reason%").replacement(reason));
-
-            // Check if the current server is a lobby server - if so, disconnect the player
-            if (plugin.getServerHandler().getLobbyServers().containsValue(event.getServer())) {
+            if (plugin.getServerHandler()
+                        .getLobbyServers()
+                        .containsValue(event.getServer())) {
                 event.setResult(KickedFromServerEvent.DisconnectPlayer.create(message));
             } else {
-                // Fallback is enabled and current server is not a lobby - try to redirect to lobby
+                if (!plugin.getConfiguration().get(ConfigurationKeys.FALLBACK)) return;
                 try {
                     var server =
                             plugin.getServerHandler()
