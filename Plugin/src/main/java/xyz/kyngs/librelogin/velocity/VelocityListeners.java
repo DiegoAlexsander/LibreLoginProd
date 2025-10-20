@@ -181,12 +181,19 @@ public class VelocityListeners
         if (event.kickedDuringServerConnect()) {
             event.setResult(KickedFromServerEvent.Notify.create(message));
         } else {
-            if (!plugin.getConfiguration().get(ConfigurationKeys.FALLBACK)
-                    || plugin.getServerHandler()
-                            .getLobbyServers()
-                            .containsValue(event.getServer())) {
+            // Check if fallback is disabled - if so, don't handle the event to allow other plugins to manage fallback
+            if (!plugin.getConfiguration().get(ConfigurationKeys.FALLBACK)) {
+                // Fallback is disabled - let other plugins handle the fallback logic
+                return;
+            }
+            
+            // Check if the current server is a lobby server - if so, disconnect the player
+            if (plugin.getServerHandler()
+                    .getLobbyServers()
+                    .containsValue(event.getServer())) {
                 event.setResult(KickedFromServerEvent.DisconnectPlayer.create(message));
             } else {
+                // Fallback is enabled and current server is not a lobby - try to redirect to lobby
                 try {
                     var server =
                             plugin.getServerHandler()
