@@ -341,9 +341,9 @@ I heavily suggest you to read this wiki page: https://github.com/Navio1430/Libre
                     "fallback",
                     false,
                     "!!THIS OPTION IS IRRELEVANT WHEN USING PAPER!! Should we fallback players to"
-                            + " lobby servers if the server they are on shutdowns? If set to false,"
-                            + " LibreLogin will not handle the fallback, allowing other plugins to manage it."
-                            + " If set to true, LibreLogin will handle the fallback itself.",
+                        + " lobby servers if the server they are on shutdowns? If set to false,"
+                        + " LibreLogin will not handle the fallback, allowing other plugins to"
+                        + " manage it. If set to true, LibreLogin will handle the fallback itself.",
                     ConfigurateHelper::getBoolean);
 
     public static final ConfigurationKey<Integer> TOTP_DELAY =
