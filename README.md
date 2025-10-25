@@ -1,7 +1,13 @@
-<div display="flex" justify-content="space-between" align="center">
-  <img width="763" height="186" alt="banner" src="https://github.com/user-attachments/assets/a84bde68-05c0-4a9c-9230-951b53f91aaa" />
-</div>
 
+
+# Maintenance update 🚀 ❗❗❗minecraft 1.21.10
+
+After couple of weeks I've decided to make a move towards new login plugin which is currently under development.
+I'm not going to maintain this plugin anymore, but still I'm open to PR's with 1.21.10 support.
+Here's the new plugin repo: https://github.com/Navio1430/NavAuth. I'm open to literally any support (even by leaving a star) with code, docs, ideas etc. also anything from todo's list.
+
+<br><br>
+<br><br>
 <div display="flex" justify-content="space-between" align="center">
  <h1>LibreLoginProd 🔐 - autologin plugin</h1>
   <p>Fork of the <b>LibreLogin</b> (previously LibrePremium) which has caused many problems with newest minecraft versions.
@@ -9,10 +15,6 @@ LibreLogin did not meet our expectations, which is why this fork was created.</p
 </div>
 <br>
 <br>
-
-# Maintenance 🚀
-
-The project is currently maintained by the **Sapphire Code sp. z o.o.** company team.
 
 # Quick information 📌
 
