@@ -34,6 +34,32 @@ public class ConfigurationKeys {
                     "Commands that are allowed while the user is not authorized.",
                     ConfigurateHelper::getStringList);
 
+    public static final ConfigurationKey<List<String>> LOGIN_COMMAND_ALIASES =
+            new ConfigurationKey<>(
+                    "command-aliases.login",
+                    List.of("login", "l", "log"),
+                    """
+Aliases for the /login command.
+You can add, remove, or modify aliases as needed.
+Example: To remove '/l' conflict, change to: ["login", "log"]
+Note: At least one alias must be present. The command will use all aliases listed here.
+After changing, remember to update 'allowed-commands-while-unauthorized' to match.
+""",
+                    ConfigurateHelper::getStringList);
+
+    public static final ConfigurationKey<List<String>> REGISTER_COMMAND_ALIASES =
+            new ConfigurationKey<>(
+                    "command-aliases.register",
+                    List.of("register", "reg"),
+                    """
+Aliases for the /register command.
+You can add, remove, or modify aliases as needed.
+Example: ["register", "signup", "reg"]
+Note: At least one alias must be present. The command will use all aliases listed here.
+After changing, remember to update 'allowed-commands-while-unauthorized' to match.
+""",
+                    ConfigurateHelper::getStringList);
+
     public static final ConfigurationKey<List<String>> LIMBO =
             new ConfigurationKey<>(
                     "limbo",

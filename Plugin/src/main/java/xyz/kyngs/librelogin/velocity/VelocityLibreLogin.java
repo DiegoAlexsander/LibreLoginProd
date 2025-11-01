@@ -83,6 +83,10 @@ public class VelocityLibreLogin extends AuthenticLibreLogin<Player, RegisteredSe
         return new VelocityCommandManager(server, bootstrap);
     }
 
+    public ProxyServer getProxyServer() {
+        return server;
+    }
+
     @Override
     public Player getPlayerFromIssuer(CommandIssuer issuer) {
         return ((VelocityCommandIssuer) issuer).getPlayer();
